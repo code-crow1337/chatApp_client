@@ -4,15 +4,13 @@ import { addUsername } from '../../redux/actions/actions';
 import ChatButton from '../ChatButton.tsx/ChatButton';
 import './UserNameInput.scss';
 
-function UserNameInput() {
+export function UserNameInput({newUsername}:{newUsername:any}) {
   const [value, setValue] = useState('');
   const [username, setUsername] = useState('');
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    username
-      ? console.log('username change and submitted. Redux')
-      : console.log('no username');
+    username ? newUsername(username) : console.log('no username');
   }, [username]);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -34,7 +32,6 @@ function UserNameInput() {
     }
     setIsError(false);
     setUsername(value);
-    addUsername(username);
     setValue('');
   };
 
@@ -71,4 +68,8 @@ function UserNameInput() {
     </div>
   );
 }
-export default connect(null, { addUsername})(UserNameInput)
+
+const mapDispatchToProps = (dispatch:any) => ({
+  newUsername: (username:String)  => dispatch(addUsername(username))
+});
+export default connect(null, mapDispatchToProps)(UserNameInput);

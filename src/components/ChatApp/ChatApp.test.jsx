@@ -1,20 +1,18 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { screen, fireEvent } from '@testing-library/dom';
-import ChatApp from './ChatApp';
+import { render, screen } from '../../utils/test-utils'
+import { ChatApp } from './ChatApp';
 
-describe.only('Testing chatApp DOM', () => {
-  const username = 'Geralt';
-  const input = document.querySelector('#username_input');
 
+describe('Testing chatApp DOM', () => {
+  beforeEach(() => {
+    render(<ChatApp />);
+  });
   test('Has a h1 heading "Chat App"', () => {
-    const { getByRole } = render(<ChatApp />);
-    const linkElement = getByRole("heading");
-    expect(linkElement).toBeInTheDocument();
+    const heading = screen.getByRole('heading', { name: /chat app/i });
+    expect(heading).toBeInTheDocument();
   });
   test('Render textfield', () => {
-    const { getByRole } = render(<ChatApp />);
-    const linkElement = getByRole("textbox");
+    const linkElement = screen.getByRole('textbox');
     expect(linkElement).toBeInTheDocument();
   });
 });

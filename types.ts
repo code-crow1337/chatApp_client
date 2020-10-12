@@ -12,6 +12,6 @@ export type IButton  = {
 export type TAddUser = {
   type:String,
   payload:{
-    content:String
+    username:String
   }
 }
