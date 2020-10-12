@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, queryByAttribute } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { screen, fireEvent } from '@testing-library/dom';
 import {UserNameInput } from './UserNameInput';
 
 
-describe.skip('Testing UserNameInput Component', () => {
+describe('Testing UserNameInput Component', () => {
   let username;
   let input;
 

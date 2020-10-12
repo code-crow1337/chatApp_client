@@ -1,20 +1,20 @@
-// test-utils.js
+// @ts-nocheck
 import React from 'react'
 import { render as rtlRender } from '@testing-library/react'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-// Import your own reducer
+
 import reducer from '../redux/reducers/username'
 
 function render(
-  ui,
+  ui:React.ReactElement,
   {
     initialState,
     store = createStore(reducer, initialState),
     ...renderOptions
   } = {}
 ) {
-  function Wrapper({ children }) {
+  function Wrapper({ children }:{children: React.ReactElement}) {
     return <Provider store={store}>{children}</Provider>
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })

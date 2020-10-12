@@ -11,7 +11,7 @@ export function UserNameInput({newUsername}:{newUsername:any}) {
 
   useEffect(() => {
     username ? newUsername(username) : console.log('no username');
-  }, [username]);
+  }, [username, newUsername]);
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Enter') {
