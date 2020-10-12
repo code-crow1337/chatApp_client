@@ -1,27 +1,55 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { addUsername } from '../../redux/actions/actions';
+import ChatButton from '../ChatButton.tsx/ChatButton';
+import './UserNameInput.scss';
 
-
-export default function UserNameInput() {
+function UserNameInput() {
   const [value, setValue] = useState('');
   const [username, setUsername] = useState('');
+  const [isError, setIsError] = useState(false);
 
-  const userNameSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    if(value === '') setValue('Can\'t be empty string');
-    setUsername(value);
-    
+  useEffect(() => {
+    username
+      ? console.log('username change and submitted. Redux')
+      : console.log('no username');
+  }, [username]);
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      userNameSubmit(event);
+    }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+
+  const userNameSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLDivElement>
+  ): void => {
+    event.preventDefault();
+    if (value === '') {
+      return setIsError(true);
+    }
+    setIsError(false);
+    setUsername(value);
+    addUsername(username);
+    setValue('');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   };
+
   return (
-    <div>
+    <div className="username">
       <form
         onSubmit={(event: React.FormEvent<HTMLFormElement>) =>
           userNameSubmit(event)
         }
       >
-        <label htmlFor="username_input">Username</label>
+        <label htmlFor="username_input">Username:</label>
         <input
           type="text"
           id="username_input"
@@ -29,11 +57,18 @@ export default function UserNameInput() {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleChange(event)
           }
+          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
+            onKeyDown(event)
+          }
           value={value}
           aria-describedby="Your username to use in this chat app"
         />
-        <input type="submit" value="Continue" />
+        <ChatButton type="submit" textContent="Let's chat" />
       </form>
+      <span className={`${isError ? 'error__Message' : 'hidden'}`}>
+        *Enter a username
+      </span>
     </div>
   );
 }
+export default connect(null, { addUsername})(UserNameInput)

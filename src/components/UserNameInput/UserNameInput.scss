@@ -1,0 +1,23 @@
+@import '../../styles/style.scss';
+
+.username {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid $primary;
+  border-radius: 2%;
+  width: 75vw;
+  -webkit-box-shadow: -11px 13px 28px -17px rgba(143,136,143,1);
+  -moz-box-shadow: -11px 13px 28px -17px rgba(143,136,143,1);
+  box-shadow: -11px 13px 28px -17px rgba(143,136,143,1);
+  form {
+    display: flex;
+    height: 100%;
+    padding: 40px;
+    flex-direction: column;
+    justify-content: space-around;
+
+  }
+}

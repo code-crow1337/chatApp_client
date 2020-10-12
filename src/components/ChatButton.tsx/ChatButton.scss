@@ -1,0 +1,37 @@
+@import '../../styles/style.scss';
+
+.button {
+  position: relative;
+  button {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    min-width: 64px;
+    width: 100%;
+    border: 2px solid $primary;
+    border-radius: 2%;
+    background-color: $accent;
+    color: black;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-box-shadow: -5px 13px 12px -3px #9b9b9b;
+    box-shadow: -5px 13px 12px -3px #9b9b9b;
+    transition: all 0.2s linear;
+    &:focus,
+    &:hover {
+      background-color: $primary;
+      border: 2px solid $accent;
+      outline: 2px solid $accent;
+    }
+    &:active {
+      background-color: $secondary-light;
+      -webkit-box-shadow: -3px 8px 7px -4px green;
+      box-shadow: -3px 8px 7px -4px green;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import UserNameInput from '../UserNameInput/UserNameInput';
-
+import './ChatApp.scss'
 function ChatApp(): React.ReactElement {
   return (
     <main className="mainContent">

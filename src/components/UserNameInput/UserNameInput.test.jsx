@@ -1,19 +1,21 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, queryByAttribute } from '@testing-library/react';
 import { screen, fireEvent } from '@testing-library/dom';
 import UserNameInput from './UserNameInput';
+import { wrap } from 'module';
 
 describe('Testing UserNameInput Component', () => {
   let username;
   let input;
+
   beforeEach(() => {
-    render(<UserNameInput />)
+    render(<UserNameInput />);
     username = 'Geralt';
     input = document.querySelector('#username_input');
   });
   test('Renders a label with text "Username"', () => {
-    const { getByLabelText } = render(<UserNameInput />);
-    const linkElement = getByLabelText(/Username/);
+
+    const linkElement = screen.getByLabelText(/username/i);
     expect(linkElement).toBeInTheDocument();
   });
   test('Check for a texfield an target value', () => {
@@ -21,9 +23,17 @@ describe('Testing UserNameInput Component', () => {
     expect(input.value).toBe(username);
   });
   test('Shall not fire if field is empty', () => {
-    const { getByRole } = render();
-    const element = getByRole('button');
+
+    const element = screen.getByRole('button', { name: /submit/i });
     fireEvent.click(element);
-    expect(input.value).toBe('Can\'t be empty string')
+    const errorParagraph = screen.getByText(/Enter a username/i);
+    expect(errorParagraph).toBeInTheDocument();
+  });
+  test('Shall submit by enter key', () => {
+   
+    const element = screen.getByRole('textbox', { name: /username_input/i })
+    fireEvent.keyDown(element, { key: 'Enter', code: 13, charCode: 13 });
+    const errorParagraph = screen.getByText(/Enter a username/i);
+    expect(errorParagraph).toBeInTheDocument();
   });
 });
