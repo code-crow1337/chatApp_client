@@ -1,0 +1,27 @@
+@import '../../styles/Base.scss';
+
+.userList {
+  display: flex;
+  padding: 8px;
+  flex-direction: column;
+  align-self: flex-end;
+  background-color: $primary;
+  height: 100vh;
+  min-width: 288px;
+  max-width: 288px;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  
+}
+.hideUserList {
+  width: 100%;
+  transform: translateX(100%);
+  transition: all 0.5s ease-out;
+}
+.showList {
+  width: 100%;
+  transform: translateX(0);
+  transition: all 0.3s ease-in;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}

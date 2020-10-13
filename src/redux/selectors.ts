@@ -1,3 +1,3 @@
-export const getUsername = (store:any) => {
-  return store && store.username ? store.username : '';
+export const getOpenStatus = (store:any) => {
+  return store.open === true ? store.open : false;
 };

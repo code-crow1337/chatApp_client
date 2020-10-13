@@ -17,7 +17,9 @@
     height: 100%;
     padding: 40px;
     flex-direction: column;
-    justify-content: space-around;
-
+    justify-content: space-between;
+    input {
+      margin-bottom:1rem ;
+    }
   }
 }

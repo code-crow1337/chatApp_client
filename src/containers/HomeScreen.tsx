@@ -11,9 +11,8 @@ export function HomeScreen({
 }: {
   newUsername?: any;
 }): React.ReactElement {
-  console.log();
   return (
-    <main className="mainContent">
+    <main className="mainContent homeScreen">
       <h1>Chat app</h1>
       {newUsername && newUsername.username !== ''
         ? <Redirect to="/chat" />

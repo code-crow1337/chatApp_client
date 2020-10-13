@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+
 import { addUsername } from '../../redux/actions/actions';
 import ChatButton from '../ChatButton.tsx/ChatButton';
 import './UserNameInput.scss';
@@ -60,7 +61,7 @@ export function UserNameInput({newUsername}:{newUsername:any}) {
           value={value}
           aria-describedby="Your username to use in this chat app"
         />
-        <ChatButton type="submit" textContent="Let's chat" />
+        <ChatButton size="large" type="submit" textContent="Let's chat" />
       </form>
       <span className={`${isError ? 'error__Message' : 'hidden'}`}>
         *Enter a username

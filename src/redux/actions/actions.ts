@@ -1,5 +1,5 @@
-import { ADD_USER } from './actionTypes';
-import { TAddUser } from '../../../types';
+import { ADD_USER, IS_USERLIST_OPEN } from './actionTypes';
+import { TAddUser,TUSerList } from '../../../types';
 
 export const addUsername = (username: String):TAddUser => {
   return {
@@ -9,3 +9,12 @@ export const addUsername = (username: String):TAddUser => {
   },
 }}
 ;
+
+export const setUserListOpen = (open:boolean):TUSerList => {
+  return {
+  type:IS_USERLIST_OPEN,
+  payload:{
+    open
+  }
+}
+}
