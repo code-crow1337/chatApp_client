@@ -12,7 +12,8 @@ export type TButton = {
   type: 'button' | 'submit' | 'reset' | undefined;
   size: 'small' | 'large';
   onClick?: any;
-  iconType?: "times" |"menu"
+  iconType?: "times" |"menu" | "send";
+  tabIndex?:number
 };
 
 export type Taction = {
@@ -35,3 +36,7 @@ export type TUSerList = {
 export type TUsername = {
   username?: { username: String } ;
 };
+export type TMessage = {
+  sender:boolean,
+  message:String,
+}

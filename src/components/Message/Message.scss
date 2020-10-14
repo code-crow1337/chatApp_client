@@ -1,0 +1,15 @@
+@import '../../styles/Base.scss';
+
+.message {
+  padding: 12px;
+  width:148px ;
+  border-radius: 32px;
+}
+.message.sender{
+  background-color: $primaryDarker;
+  align-self: flex-end;
+}
+.message.reciver{
+  background-color: $accent;
+  align-self: flex-end;
+}

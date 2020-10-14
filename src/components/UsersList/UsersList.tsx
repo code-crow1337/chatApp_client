@@ -1,21 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { setUserListOpen } from '../../redux/actions/actions';
+import React, { useState } from 'react';
 import User from '../Users/User';
 import './UserList.scss';
 import ChatButton from '../ChatButton.tsx/ChatButton';
 
-export function UsersList(props: any) {
-  const { open, setIsOpen } = props;
-  console.log(props);
+export function UsersList(props: any):React.ReactElement {
+  const { open, openCloseMenu } = props;
+  const isTabable = open ? 1 : -1;
   return (
     <div className={`userList ${open ? 'showList' : 'hideUserList'}`}>
       <ChatButton
+        tabIndex={isTabable}
         iconType="times"
         icon={true}
         type="button"
         size="small"
-        onClick={() => setIsOpen(open)}
+        onClick={() => openCloseMenu(open)}
       />
       <User />
       <User />
@@ -28,17 +27,5 @@ export function UsersList(props: any) {
   );
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    setIsOpen: (prevState: boolean) => {
-      return dispatch(setUserListOpen(!prevState));
-    },
-  };
-};
-const mapStateToProps = (state: any) => {
-  const {
-    userList: { open },
-  } = state;
-  return { open };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+
+export default UsersList;

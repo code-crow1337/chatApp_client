@@ -1,13 +1,20 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes,faPaperPlane, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { TButton } from '../../../types';
 
 import './ChatButton.scss';
 
 export default function ChatButton(props: TButton) {
   let { type, textContent, size, icon, iconType, ...rest } = props;
-  const fontawesomeIcon = iconType === "menu" ? faBars : faTimes
+  let fontawesomeIcon:IconDefinition;
+  if(iconType === "menu"){
+    fontawesomeIcon =faBars
+  }else if( iconType === "times"){
+    fontawesomeIcon = faTimes;
+  }else {
+    fontawesomeIcon = faPaperPlane
+  }
   const text = icon ? (
     <FontAwesomeIcon icon={fontawesomeIcon} className="button__icon" />
     ) : (

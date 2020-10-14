@@ -1,0 +1,48 @@
+@import '../../styles/Base.scss';
+
+.chatContent{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  &__messages {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  &__userMessage{
+    margin-top: 16px;
+    align-self: center;
+    padding:  0 16px 32px;
+    width: 90%;
+    min-height: 48px;
+    max-height: 104px;
+     &__form{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      textarea {
+        resize: none;
+        outline: none;
+        height: 72px;
+        width: 100%;
+        padding: 16px;
+        padding-left: 24px;
+        border-radius: 32px;
+        position: relative;
+        border: 2px solid $primary;
+        &:focus {
+          border: 2px solid $accent;
+        }
+      }
+      &--send{
+        position: absolute;
+        right: 24px;
+      }
+    }
+  }
+}
