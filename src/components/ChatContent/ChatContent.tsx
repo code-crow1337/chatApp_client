@@ -1,4 +1,6 @@
+import { MessageSharp } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
+import { CLIENT_RENEG_WINDOW } from 'tls';
 import SocketIO from '../../socketIO/socketIO';
 import ChatButton from '../ChatButton.tsx/ChatButton';
 import Message from '../Message/Message';
@@ -7,13 +9,16 @@ import './ChatContent.scss';
 export default function ChatContent(props: any): React.ReactElement {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
-  const [allMessage, setAllMessages] = useState<any[] | any[]>([]);
+  const [allMessage, setAllMessages] = useState<React.ReactElement[] | any[]>([]);
   const { handleMessage, userData, socket, currentUser } = props;
-
+  
   useEffect(() => {
-    if (userData !== undefined && userData[0].messages.length !== 0)
+    if (userData !== undefined){
       formateData();
+
+    }
   }, [userData]);
+
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -39,29 +44,31 @@ export default function ChatContent(props: any): React.ReactElement {
     setMessage(e.target.value);
   };
 
-  const renderMessages = () => {
-    return allMessage.map((message: any) => (
-      <Message
-        sender={currentUser === message.user}
-        username={message.user}
-        message={message.message}
-      />
-    ));
-  };
-  const formateData = (): void => {
-    console.log('chatContent', allMessage);
+  const renderMessages = (): any => {
+
+    let takingOutMessages:any[]= [];
     userData.forEach((user: any) => {
-      const addNewMessage = user.messages[user.messages.length - 1];
-      setAllMessages((prevArr) => [
-        ...prevArr,
-        { message: addNewMessage, user: user.username, id:`${user.username}+${user.clientID}` },
-      ]);
+      if(user.messages.length === 0) return ''; 
+       user.messages.forEach((message: any) => {
+        takingOutMessages=[...takingOutMessages,{user:user.username, id:user.clientID, message:message.message, messageID: message.id, time:message.time }];
+      });
     });
+    takingOutMessages.sort((a:any, b:any) => a.time - b.time)
+    const createdMessageElements = takingOutMessages.map((message:any) => {
+      return (
+        <Message username={message.user} sender={message.user === currentUser} message={message.message} />
+      )
+    })
+    setAllMessages(createdMessageElements);
+  };
+  const formateData = (): any => {
+
+    renderMessages();
   };
   return (
     <div className="chatContent">
       <div className="chatContent__messages">
-        {allMessage === [] ? <p>No Messages yet</p> : renderMessages()}
+        {allMessage === [] ? <p>No Messages yet</p> : allMessage}
       </div>
       <div className="chatContent__userMessage">
         <form

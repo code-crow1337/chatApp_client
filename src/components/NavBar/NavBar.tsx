@@ -7,9 +7,8 @@ import './NavBar.scss';
   const {
     open,
     openCloseMenu,
-    usersOnline
+    userData
   } = props;
-
   return (
     <div className="navBar">
       <nav className="nav">
@@ -21,7 +20,7 @@ import './NavBar.scss';
           iconType="menu"
           onClick={() => openCloseMenu(open)}
         />
-        <UserList open={open}  openCloseMenu={openCloseMenu} usersOnline={usersOnline}/>
+        <UserList open={open}  openCloseMenu={openCloseMenu} usersOnline={userData}/>
       </nav>
     </div>
   );

@@ -9,7 +9,9 @@ export function UserNameInput({ getInput, errorMessage, isError }: { getInput: a
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    username !== "" ? getInput(username) : console.log('no username');
+    if(username !== "" ){
+      getInput(username)
+    }
     setUsername("");
   }, [username, getInput]);
 

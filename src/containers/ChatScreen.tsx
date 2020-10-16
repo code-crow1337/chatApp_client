@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
+import socketIO from 'socket.io-client';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -6,6 +7,7 @@ import {
   stablishConnection,
   getOnlineUsers,
   sendMessage,
+  sendUsername,clearConnection
 } from '../redux/actions/actions';
 import NavBar from '../components/NavBar/NavBar';
 import ChatContent from '../components/ChatContent/ChatContent';
@@ -18,12 +20,31 @@ export function ChatScreen(props: any): ReactElement {
     getUsers,
     socketObj,
     userData,
-    setMessage,
+    setMessage,connected,
+    openConnection,clearSocket
   } = props;
-  console.log('socket in chatscreen', props);
+  console.log('chat props', props);
 
   useEffect(() => {
-    getUsers(socketObj);
+    console.log('connection',connected);
+    console.log('user', newUser);
+    if (connected) {
+      return getUsers(socketObj);
+    } else if(!connected && newUser.username !== "") {
+      console.log('socket dosent exist');
+      const connectToSocket = async () => {
+        const BACKEND = 'http://127.0.0.1:4000';
+        const socket = await socketIO.connect(BACKEND);
+        console.log('recived socket', socket);
+        openConnection(socket);
+        sendUsername(socket, newUser.username);
+        getUsers(socket);
+      };
+      connectToSocket();
+    }
+    return () => {
+      clearSocket({}, false);
+    }
   }, []);
 
   const handleMenu = (isOpen: boolean): void => {
@@ -32,7 +53,6 @@ export function ChatScreen(props: any): ReactElement {
 
   const renderChat = (newUser: any): ReactElement => {
     const { username } = newUser;
-  
     return (
       <>
         <NavBar
@@ -41,14 +61,23 @@ export function ChatScreen(props: any): ReactElement {
           userData={userData}
         />
         <span className="welcome_message">Welcome {username}</span>
-        <ChatContent  handleMessage={setMessage} userData={userData} currentUser={newUser.username} socket={socketObj}/>
+        <ChatContent
+          handleMessage={setMessage}
+          userData={userData}
+          currentUser={newUser.username}
+          socket={socketObj}
+        />
       </>
     );
   };
-
+console.log('no username', newUser.username !== "");
   return (
     <main className="mainContent chatScreen">
-      {newUser.username ? renderChat(newUser) : <Redirect to="/" />}{' '}
+      {newUser.username !== "" ? (
+        renderChat(newUser)
+      ) : (
+        <Redirect to="/" />
+      )}
     </main>
   );
 }
@@ -67,6 +96,9 @@ const mapDispatchToProps = (dispatch: any) => {
     setMessage: (socket: any, username: string, message: string) => {
       dispatch(sendMessage(socket, username, message));
     },
+    clearSocket: (socket:any, isOpen:boolean) => {
+      dispatch(clearConnection(socket, isOpen))
+    }
   };
 };
 const mapStateToProps = (state: any) => {

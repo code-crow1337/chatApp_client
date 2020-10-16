@@ -2,7 +2,8 @@ import {
   ADD_USER,
   IS_USERLIST_OPEN,
   IS_CONNECTED,
-  ONLINE_USERS,UPDATE_MESSAGE
+  ONLINE_USERS,
+  UPDATE_MESSAGE,
 } from './actionTypes';
 import { TAddUser, TUSerList, TConnected } from '../../../types';
 import socketIO from '../../socketIO/socketIO';
@@ -25,6 +26,16 @@ export const setUserListOpen = (open: boolean): TUSerList => {
     },
   };
 };
+export const clearConnection = ( socket: any,
+  isConnected: boolean) => {
+    return {
+      type: IS_CONNECTED,
+      payload: {
+        socket,
+        connected: isConnected,
+      },
+    };
+  }
 export const setConnection = (
   socket: any,
   isConnected: boolean
@@ -44,14 +55,12 @@ export const sendMessage = (
 ): any => {
   return (dispatch: any) => {
     socket.emit('send message', { username, message });
-    socket.on('data updated',(response:any) => {
-      console.log('response from server', response)
+    socket.on('data updated', (response: any) => {
       return dispatch(updateData(response.onlineUsers));
-    })
+    });
   };
 };
 export const updateData = (users: any) => {
-  console.log('users in action', users);
   return {
     type: ONLINE_USERS,
     payload: {
@@ -60,13 +69,17 @@ export const updateData = (users: any) => {
   };
 };
 export const getOnlineUsers = (socket: any) => {
+  console.log('getonline users triggered');
   return (dispatch: any) => {
     socket.on('data updated', (response: any) => {
+      console.log('recived users', response);
       return dispatch(updateData(response.onlineUsers));
     });
   };
 };
 export const sendUsername = (socket: any, username: string) => {
+  console.log('sendusername recived username', username);
+  console.log('username socket',socket);
   return (dispatch: any) => {
     socket.emit('newUser', { username });
     socket.on('response newUser', (response: any) => {
@@ -80,6 +93,7 @@ export const stablishConnection = (socket: any): any => {
   return (dispatch: any) => {
     socket.on('connected', (response: any) => {
       if (response.isConnected) {
+        console.log('we are connected');
         dispatch(setConnection(socket, response.isConnected));
       }
     });

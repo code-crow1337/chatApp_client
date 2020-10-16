@@ -15,7 +15,18 @@ export type TButton = {
   iconType?: "times" |"menu" | "send";
   tabIndex?:number
 };
-
+export type TStateSocketIo = {
+  connected: boolean,
+  socket: any,
+  online?: Tuser[],
+}
+export type TStateUserlist = {
+  open:boolean,
+}
+export type TStateUsername = {
+  username:string,
+  available:boolean,
+}
 export type Taction = {
   type: string;
   payload: any;

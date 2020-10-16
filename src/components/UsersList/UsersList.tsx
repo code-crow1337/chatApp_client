@@ -6,16 +6,24 @@ import ChatButton from '../ChatButton.tsx/ChatButton';
 
 export function UsersList(props: any): React.ReactElement {
   const { open, openCloseMenu, usersOnline } = props;
-  const [online, setOnline] = useState(usersOnline);
+  const [online, setOnline] = useState<string[] | []>([]);
   const isTabable = open ? 1 : -1;
+
+
   useEffect(() => {
-    setOnline(usersOnline);
+    if (usersOnline !== undefined) {
+      let totalUsers: string[] = [];
+      usersOnline.forEach((user: any) => {
+        totalUsers = [...totalUsers, user.username];
+      });
+      setOnline(totalUsers);
+    }
   }, [usersOnline]);
 
-  const renderOnlineUsers = (): React.ReactElement => {
-    if (usersOnline === undefined) return <p>'Error, server not responding'</p>;
-    return usersOnline.map((user: Tuser) => (
-      <User key={user.clientID} username={user.username} />
+  const renderOnlineUsers = (): any => {
+    if (online === []) return <p>'Error, server not responding'</p>;
+    return (online as Array<string>).map((user: string) => (
+      <User key={user} username={user} />
     ));
   };
   return (

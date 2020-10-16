@@ -2,13 +2,13 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import socketIO from 'socket.io-client';
 import { Redirect } from 'react-router-dom';
-import { sendUsername, stablishConnection } from '../redux/actions/actions';
+import { sendUsername, stablishConnection,clearConnection } from '../redux/actions/actions';
 
 import UserNameInput from '../components/UserNameInput/UserNameInput';
 import './Screen.scss';
 
 export function HomeScreen(props: any): React.ReactElement {
-  const { newUser, openConnection, connected, sendUsername, socketObj } = props;
+  const { newUser, openConnection, connected, sendUsername, socketObj,clearSocket } = props;
 
   useEffect(() => {
     const BACKEND = 'http://127.0.0.1:4000';
@@ -60,5 +60,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   openConnection: (socket: any) => {
     return dispatch(stablishConnection(socket));
   },
+  clearSocket: (socket:any, isOpen:boolean) => {
+    dispatch(clearConnection(socket, isOpen))
+  }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
