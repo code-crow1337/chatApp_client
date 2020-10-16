@@ -8,11 +8,9 @@ export function SocketIO(props: any) {
   const [response, setResponse] = useState('');
 
   useEffect(() => {
-    console.log('triggered');
     const socket = io(BACKEND);
     socket.emit('newUser', {username});
     socket.on('response newUser', (data:any) => {
-      console.log(data);
       setResponse(data);
     })
   }, []);

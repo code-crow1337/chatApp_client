@@ -1,4 +1,5 @@
-import { createStore} from 'redux';
+import { createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { TUsername } from '../../types';
 import rootReducer from './reducers';
@@ -23,7 +24,7 @@ const loadFromLocalStorage = ():TUsername | undefined=> {
   }
 }
 
-const store = createStore(rootReducer, loadFromLocalStorage(),composeWithDevTools());
+const store = createStore(rootReducer,applyMiddleware(thunk));
 
-store.subscribe(() => saveToLocalStorage(store.getState()));
+// store.subscribe(() => saveToLocalStorage(store.getState()));
 export default store; 

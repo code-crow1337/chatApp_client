@@ -22,10 +22,11 @@
   
     &:focus,
     &:hover { 
-      background-color: $accent;
+      background-color: $accent;  
       border: 2px solid $accent;
       outline: 2px solid $accent;
       color: white;
+      outline: none;
     }
     &:active {
       background-color: $secondary-light;
@@ -41,7 +42,7 @@
 .large {
   min-width: 64px;
   width: 100%;
-  border-radius: 0%;
+  border-radius: 30px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   &:active {
     background-color: $secondary-light;

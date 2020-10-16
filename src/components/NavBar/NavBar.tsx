@@ -7,6 +7,7 @@ import './NavBar.scss';
   const {
     open,
     openCloseMenu,
+    usersOnline
   } = props;
 
   return (
@@ -20,7 +21,7 @@ import './NavBar.scss';
           iconType="menu"
           onClick={() => openCloseMenu(open)}
         />
-        <UserList open={open}  openCloseMenu={openCloseMenu}/>
+        <UserList open={open}  openCloseMenu={openCloseMenu} usersOnline={usersOnline}/>
       </nav>
     </div>
   );

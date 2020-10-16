@@ -4,46 +4,64 @@ import ChatButton from '../ChatButton.tsx/ChatButton';
 import Message from '../Message/Message';
 import './ChatContent.scss';
 
-export default function ChatContent(): React.ReactElement {
+export default function ChatContent(props: any): React.ReactElement {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const [allMessage, setAllMessages] = useState<any[] | any[]>([]);
+  const { handleMessage, userData, socket, currentUser } = props;
 
+  useEffect(() => {
+    if (userData !== undefined && userData[0].messages.length !== 0)
+      formateData();
+  }, [userData]);
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
       event.stopPropagation();
-      console.log('send message');
       submitMessage(event);
     }
   };
   const submitMessage = (
     event:
       | React.ChangeEvent<HTMLTextAreaElement>
-      | React.KeyboardEvent<HTMLTextAreaElement> | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+      | React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
     if (message === '') {
       setIsError(true);
       return;
     }
-    console.log('message submited', message);
+    handleMessage(socket, currentUser, message);
     setMessage('');
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setMessage(e.target.value);
+  };
+
+  const renderMessages = () => {
+    return allMessage.map((message: any) => (
+      <Message
+        sender={currentUser === message.user}
+        username={message.user}
+        message={message.message}
+      />
+    ));
+  };
+  const formateData = (): void => {
+    console.log('chatContent', allMessage);
+    userData.forEach((user: any) => {
+      const addNewMessage = user.messages[user.messages.length - 1];
+      setAllMessages((prevArr) => [
+        ...prevArr,
+        { message: addNewMessage, user: user.username, id:`${user.username}+${user.clientID}` },
+      ]);
+    });
   };
   return (
     <div className="chatContent">
       <div className="chatContent__messages">
-        <Message message={'1'} sender={true} />{' '}
-        <Message message={'2'} sender={true} />
-        <Message message={'3'} sender={false} />{' '}
-        <Message message={'4'} sender={false} />
-        <Message message={'15'} sender={true} />{' '}
-        <Message message={'6'} sender={false} />
-        <Message message={'7'} sender={true} />{' '}
-        <Message message={'8'} sender={false} />
+        {allMessage === [] ? <p>No Messages yet</p> : renderMessages()}
       </div>
       <div className="chatContent__userMessage">
         <form
@@ -71,11 +89,10 @@ export default function ChatContent(): React.ReactElement {
             />
           </div>
         </form>
-          <span className={`${isError ? 'error__Message' : 'hidden'}`}>
-            *Can't send empty messages. 
-          </span>
+        <span className={`${isError ? 'error__Message' : 'hidden'}`}>
+          *Can't send empty messages.
+        </span>
       </div>
-      {/*       <SocketIO /> */}
     </div>
   );
 }

@@ -25,6 +25,24 @@ export type TAddUser = {
   type: String;
   payload: {
     username: String;
+    available:boolean;
+  };
+};
+type message = {
+  senderName:string,
+  message:string,
+}
+export type Tuser = {
+  username:string,
+  clientID:string,
+  message?:message[]
+}
+export type TConnected = {
+  type: String;
+  payload: {
+    socket:any;
+    connected: boolean;
+    online?:Tuser[];
   };
 };
 export type TUSerList = {
@@ -39,4 +57,5 @@ export type TUsername = {
 export type TMessage = {
   sender:boolean,
   message:String,
+  username:String,
 }

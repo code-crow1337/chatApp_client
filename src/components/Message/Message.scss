@@ -2,8 +2,10 @@
 
 .message {
   padding: 12px;
-  width:148px ;
+  min-width:148px;
+  width: 300px;
   border-radius: 32px;
+  margin-top: 8px;
 }
 .message.sender{
   background-color: $primaryDarker;
@@ -11,5 +13,5 @@
 }
 .message.reciver{
   background-color: $accent;
-  align-self: flex-end;
+  align-self: flex-start;
 }

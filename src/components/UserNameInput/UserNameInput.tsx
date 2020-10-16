@@ -2,15 +2,24 @@ import React, { useState, useEffect } from 'react';
 import ChatButton from '../ChatButton.tsx/ChatButton';
 import './UserNameInput.scss';
 
-export function UserNameInput({ getUsername }: { getUsername: any }) {
+export function UserNameInput({ getInput, errorMessage, isError }: { getInput: any, errorMessage:string, isError:boolean }):React.ReactElement {
   const [value, setValue] = useState('');
   const [username, setUsername] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [typeError, setTypeError] = useState("userInput")
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    username ? getUsername(username) : console.log('no username');
-  }, [username, getUsername]);
+    username !== "" ? getInput(username) : console.log('no username');
+    setUsername("");
+  }, [username, getInput]);
 
+  useEffect(() => {
+    if(isError){
+      setTypeError("server")
+      setError(isError);
+    }
+  }, [isError]);
+  
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -26,9 +35,10 @@ export function UserNameInput({ getUsername }: { getUsername: any }) {
   ): void => {
     event.preventDefault();
     if (value === '') {
-      return setIsError(true);
+      setTypeError("userInput");
+      return setError(true);
     }
-    setIsError(false);
+    setError(false);
     setUsername(value);
     setValue('');
   };
@@ -59,8 +69,8 @@ export function UserNameInput({ getUsername }: { getUsername: any }) {
         />
         <ChatButton size="large" type="submit" textContent="Let's chat" />
       </form>
-      <span className={`${isError ? 'error__Message' : 'hidden'}`}>
-        *Enter a username
+      <span className={`${error ? 'error__Message' : 'hidden'}`}>
+        *{typeError === "userInput" ? "No empty values" : errorMessage}
       </span>
     </div>
   );
