@@ -69,17 +69,13 @@ export const updateData = (users: any) => {
   };
 };
 export const getOnlineUsers = (socket: any) => {
-  console.log('getonline users triggered');
   return (dispatch: any) => {
     socket.on('data updated', (response: any) => {
-      console.log('recived users', response);
       return dispatch(updateData(response.onlineUsers));
     });
   };
 };
 export const sendUsername = (socket: any, username: string) => {
-  console.log('sendusername recived username', username);
-  console.log('username socket',socket);
   return (dispatch: any) => {
     socket.emit('newUser', { username });
     socket.on('response newUser', (response: any) => {
@@ -93,7 +89,6 @@ export const stablishConnection = (socket: any): any => {
   return (dispatch: any) => {
     socket.on('connected', (response: any) => {
       if (response.isConnected) {
-        console.log('we are connected');
         dispatch(setConnection(socket, response.isConnected));
       }
     });

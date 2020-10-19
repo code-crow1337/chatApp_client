@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
 
 const saveToLocalStorage = (state:any):void => {
-  console.log('storage', state); 
+ 
   const dataToSave = {
     userlist:state.userlist,
     username:state.username, 

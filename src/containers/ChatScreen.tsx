@@ -23,19 +23,16 @@ export function ChatScreen(props: any): ReactElement {
     setMessage,connected,
     openConnection,clearSocket
   } = props;
-  console.log('chat props', props);
+
 
   useEffect(() => {
-    console.log('connection',connected);
-    console.log('user', newUser);
     if (connected) {
       return getUsers(socketObj);
     } else if(!connected && newUser.username !== "") {
-      console.log('socket dosent exist');
       const connectToSocket = async () => {
         const BACKEND = 'http://127.0.0.1:4000';
         const socket = await socketIO.connect(BACKEND);
-        console.log('recived socket', socket);
+
         openConnection(socket);
         sendUsername(socket, newUser.username);
         getUsers(socket);
@@ -70,7 +67,6 @@ export function ChatScreen(props: any): ReactElement {
       </>
     );
   };
-console.log('no username', newUser.username !== "");
   return (
     <main className="mainContent chatScreen">
       {newUser.username !== "" ? (
