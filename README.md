@@ -9,13 +9,13 @@
 
 ## Screenshots
 ### Hompage
-<img alt="log in with username" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_homepage.PNG" width=300 />
+<img alt="log in with username" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_homepage.PNG" />
 
 ### The app
-<img alt="conversation screen" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_conversation.PNG" width=300 align="left" />
+<img alt="conversation screen" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_conversation.PNG"  />
 
 ### Online users
-<img alt="see all users who is online" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_online.PNG" width=300/>
+<img alt="see all users who is online" src="https://github.com/code-crow1337/chatApp_client/blob/developFront/chatApp_online.PNG" />
 
 ### Todo Fixes
 test-Utils: Find what kind of type needs to be created for the "initialState". 
