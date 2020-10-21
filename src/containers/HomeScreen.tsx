@@ -13,7 +13,7 @@ export function HomeScreen(props: any): React.ReactElement {
   useEffect(() => {
     const BACKEND = 'http://127.0.0.1:4000';
     const connectToSocket = async () => {
-      const socket = await socketIO.connect(BACKEND);
+      const socket = await socketIO.connect();
       openConnection(socket);
     };
     connectToSocket();
