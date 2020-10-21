@@ -36,6 +36,8 @@ export default function ChatContent(props: any): React.ReactElement {
     if (message === '') {
       setIsError(true);
       return;
+    }else if (message.length > 0) {
+      setIsError(false);
     }
     handleMessage(socket, currentUser, message);
     setMessage('');
