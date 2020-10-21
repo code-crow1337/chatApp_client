@@ -56,7 +56,7 @@ export default function ChatContent(props: any): React.ReactElement {
     takingOutMessages.sort((a:any, b:any) => a.time - b.time)
     const createdMessageElements = takingOutMessages.map((message:any) => {
       return (
-        <Message username={message.user} sender={message.user === currentUser} message={message.message} />
+        <Message key={`${message.user}+${message.message}`} username={message.user} sender={message.user === currentUser} message={message.message} />
       )
     })
     setAllMessages(createdMessageElements);

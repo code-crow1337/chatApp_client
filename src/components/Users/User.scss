@@ -3,12 +3,13 @@
 .user {
   display: flex;
   padding: 1rem;
+  color: white;  
   border-bottom: 2px dotted white;
   &__imgContainer {
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    background-color: $primaryDarker;
+    background-color: $accent;  
     padding: 4px;
     margin-right: 8px;
     &__img {

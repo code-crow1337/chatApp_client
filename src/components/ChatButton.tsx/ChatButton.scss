@@ -7,10 +7,9 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    min-width: 64px;
-    width: 100%;
     border: 2px solid transparent;
     border-radius: 40px;
+    width: 100%;
     background-color: $primaryDarker;
     color: black;
     text-transform: uppercase;
@@ -19,7 +18,7 @@
     font-size: 1.5rem;
     overflow: hidden;
     cursor: pointer;
-  
+    color: white;
     &:focus,
     &:hover { 
       background-color: $accent;  
@@ -40,9 +39,8 @@
   }
 }
 .large {
-  min-width: 64px;
   width: 100%;
-  border-radius: 30px;
+  border-radius: 40px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   &:active {
     background-color: $secondary-light;
@@ -51,8 +49,7 @@
   }
 }
 .small {
-  min-width: 64px;
+  width: 60px;
   height: auto;
-  max-width: 68px;
-  border-radius: 50%;
+  border-radius: 15px;
 }

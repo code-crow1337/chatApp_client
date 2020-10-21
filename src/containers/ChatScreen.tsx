@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState, Dispatch } from 'react';
 import socketIO from 'socket.io-client';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ export function ChatScreen(props: any): ReactElement {
     socketObj,
     userData,
     setMessage,connected,
-    openConnection,clearSocket
+    openConnection,clearSocket, sendUsername
   } = props;
 
 
@@ -68,7 +68,8 @@ export function ChatScreen(props: any): ReactElement {
     );
   };
   return (
-    <main className="mainContent chatScreen">
+
+    <main className={`mainContent chatScreen ${menuState ? "open" : "close"}`}>
       {newUser.username !== "" ? (
         renderChat(newUser)
       ) : (
@@ -78,7 +79,7 @@ export function ChatScreen(props: any): ReactElement {
   );
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     setIsOpen: (prevState: boolean) => {
       return dispatch(setUserListOpen(!prevState));
@@ -94,7 +95,9 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     clearSocket: (socket:any, isOpen:boolean) => {
       dispatch(clearConnection(socket, isOpen))
-    }
+    },
+    sendUsername: (socket: any, username: string) =>
+    dispatch(sendUsername(socket, username)),
   };
 };
 const mapStateToProps = (state: any) => {

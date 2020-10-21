@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import socketIO from 'socket.io-client';
 import { Redirect } from 'react-router-dom';
@@ -40,7 +40,7 @@ export function HomeScreen(props: any): React.ReactElement {
 
   return (
     <main className="mainContent homeScreen">
-      <h1>Chat app</h1>
+      <h1>Chat Sky</h1>
       {newUser.username === '' ? renderModal() : <Redirect to="/chat" />}
     </main>
   );
@@ -54,7 +54,7 @@ const mapStateToProps = (state: any) => {
   } = state;
   return { newUser: username, connected, socketObj: socket };
 };
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
   sendUsername: (socket: any, username: string) =>
     dispatch(sendUsername(socket, username)),
   openConnection: (socket: any) => {

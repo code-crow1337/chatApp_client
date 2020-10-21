@@ -3,12 +3,14 @@ import {
   IS_USERLIST_OPEN,
   IS_CONNECTED,
   ONLINE_USERS,
-  UPDATE_MESSAGE,
 } from './actionTypes';
-import { TAddUser, TUSerList, TConnected } from '../../../types';
-import socketIO from '../../socketIO/socketIO';
+import { TAddUser, TUSerList, TConnected,TSocketIO } from '../../../types';
+import {  Action } from 'redux'; 
+import {ThunkDispatch } from 'redux-thunk'
+import {RootState} from '../reducers/index'
+import {Socket} from 'socket.io-client'
 
-export const addUsername = (username: String, available: boolean): TAddUser => {
+export const addUsername = (username: string, available: boolean): TAddUser => {
   return {
     type: ADD_USER,
     payload: {
@@ -26,7 +28,7 @@ export const setUserListOpen = (open: boolean): TUSerList => {
     },
   };
 };
-export const clearConnection = ( socket: any,
+export const clearConnection = ( socket:TSocketIO,
   isConnected: boolean) => {
     return {
       type: IS_CONNECTED,
@@ -49,18 +51,18 @@ export const setConnection = (
   };
 };
 export const sendMessage = (
-  socket: any,
+  socket: TSocketIO,
   username: string,
   message: string
 ): any => {
-  return (dispatch: any) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, Action<string>>) => {
     socket.emit('send message', { username, message });
     socket.on('data updated', (response: any) => {
       return dispatch(updateData(response.onlineUsers));
     });
   };
 };
-export const updateData = (users: any) => {
+export const updateData = (users: TSocketIO) => {
   return {
     type: ONLINE_USERS,
     payload: {
@@ -68,25 +70,26 @@ export const updateData = (users: any) => {
     },
   };
 };
-export const getOnlineUsers = (socket: any) => {
-  return (dispatch: any) => {
+export const getOnlineUsers = (socket: TSocketIO) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, Action<string>>) => {
     socket.on('data updated', (response: any) => {
       return dispatch(updateData(response.onlineUsers));
     });
   };
 };
-export const sendUsername = (socket: any, username: string) => {
-  return (dispatch: any) => {
+
+export const sendUsername = (socket: TSocketIO, username: string) => {
+  return (dispatch: ThunkDispatch<RootState, unknown, Action<string>>) => {
     socket.emit('newUser', { username });
     socket.on('response newUser', (response: any) => {
       if (!response.available) return dispatch(addUsername('', false));
       dispatch(getOnlineUsers(socket));
-      return dispatch(addUsername(response.username, true));
+      dispatch(addUsername(response.username, true));
     });
   };
 };
-export const stablishConnection = (socket: any): any => {
-  return (dispatch: any) => {
+export const stablishConnection = (socket: TSocketIO) => {
+  return (dispatch:  ThunkDispatch<RootState, unknown, Action<string>>) => {
     socket.on('connected', (response: any) => {
       if (response.isConnected) {
         dispatch(setConnection(socket, response.isConnected));

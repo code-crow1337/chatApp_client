@@ -1,13 +1,17 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { MouseEvent, KeyboardEvent, ReactElement } from 'react';
+import {Socket } from 'socket.io-client';
+
+
+export type TSocketIO =  typeof Socket;
 
 export type inputEventTypes = {
   event: KeyboardEvent | MouseEvent;
 };
 
 export type TButton = {
-  textContent?: String;
+  textContent?: string;
   icon?: boolean;
   type: 'button' | 'submit' | 'reset' | undefined;
   size: 'small' | 'large';
@@ -33,9 +37,9 @@ export type Taction = {
 };
 
 export type TAddUser = {
-  type: String;
+  type: string;
   payload: {
-    username: String;
+    username: string;
     available:boolean;
   };
 };
@@ -49,7 +53,7 @@ export type Tuser = {
   message?:message[]
 }
 export type TConnected = {
-  type: String;
+  type: string;
   payload: {
     socket:any;
     connected: boolean;
@@ -57,16 +61,16 @@ export type TConnected = {
   };
 };
 export type TUSerList = {
-  type: String;
+  type: string;
   payload: {
     open: boolean;
   };
 };
 export type TUsername = {
-  username?: { username: String } ;
+  username?: { username: string } ;
 };
 export type TMessage = {
   sender:boolean,
-  message:String,
-  username:String,
+  message:string,
+  username:string,
 }
