@@ -31,7 +31,8 @@ export function ChatScreen(props: any): ReactElement {
     } else if(!connected && newUser.username !== "") {
       const connectToSocket = async () => {
         const BACKEND = 'https://code-crow1337-chat-app-server.herokuapp.com/';
-        const socket = await socketIO.connect(BACKEND, {secure: true});
+        console.log('backend', BACKEND)
+        const socket = await socketIO(BACKEND);
 
         openConnection(socket);
         sendUsername(socket, newUser.username);

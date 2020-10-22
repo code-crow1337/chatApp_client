@@ -13,7 +13,8 @@ export function HomeScreen(props: any): React.ReactElement {
   useEffect(() => {
     const BACKEND = 'https://code-crow1337-chat-app-server.herokuapp.com/';
     const connectToSocket = async () => {
-      const socket = await socketIO.connect();
+      console.log('backend', BACKEND)
+      const socket = await socketIO(BACKEND);
       openConnection(socket);
     };
     connectToSocket();
