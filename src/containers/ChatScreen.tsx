@@ -30,7 +30,7 @@ export function ChatScreen(props: any): ReactElement {
       return getUsers(socketObj);
     } else if(!connected && newUser.username !== "") {
       const connectToSocket = async () => {
-        const BACKEND = 'http://127.0.0.1:4000';
+        const BACKEND = 'https://code-crow1337-chat-app-server.herokuapp.com/';
         const socket = await socketIO.connect(BACKEND);
 
         openConnection(socket);
