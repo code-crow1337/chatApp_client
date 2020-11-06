@@ -1,6 +1,9 @@
 
 # Chat app front-end with React
 
+## Live Version
+https://code-crow1337-chat-application.herokuapp.com/
+
 ## How to start the Application
 1. ```git clone https://github.com/code-crow1337/chatApp_client.git ``` in your terminal.
 2. ```CD into chatApp_client``` and do ```npm install``` as well as ```npm start ```. 
